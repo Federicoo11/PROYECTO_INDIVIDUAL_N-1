@@ -5,9 +5,9 @@ import calendar
 app = FastAPI()
 
 # Cargar los csv
-df_movies1 = pd.read_csv("E:/Henry/Prueba1/Deploy/csv/movies1.csv")
-df_movies2 = pd.read_csv("E:/Henry/Prueba1/Deploy/csv/movies2.csv")
-df_movies3 = pd.read_csv("E:/Henry/Prueba1/Deploy/csv/movies3.csv")
+df_movies1 = pd.read_csv("csv/movies1.csv")
+df_movies2 = pd.read_csv("csv/movies2.csv")
+df_movies3 = pd.read_csv("csv/movies3.csv")
 
 def cantidad_filmaciones_mes(mes, df_movies1):
     meses_espanol_ingles = {
