@@ -177,6 +177,47 @@ def get_director_endpoint(nombre_director: str):
     result = get_director(nombre_director, df_movies3)
     return {"mensaje": result}
 
+# Usar TF-IDF Vectorizer en los títulos de las películas
+tfidf = TfidfVectorizer(stop_words='english')
+df_movies1['title'] = df_movies1['title'].fillna('')
+tfidf_matrix = tfidf.fit_transform(df_movies1['title'])
+
+# Calcular la similitud del coseno
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+# Crear un índice para los títulos de las películas
+indices = pd.Series(df_movies1.index, index=df_movies1['title']).drop_duplicates()
+
+def recomendacion(titulo):
+    # Verificar si el título existe en los datos
+    if titulo not in indices:
+        raise HTTPException(status_code=404, detail="Título no encontrado")
+    
+    # Obtener el índice de la película que coincide con el título
+    idx = indices[titulo]
+
+    # Obtener las puntuaciones de similitud de todas las películas con esa película
+    sim_scores = list(enumerate(cosine_sim[idx]))
+
+    # Ordenar las películas según las puntuaciones de similitud
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+    # Obtener las puntuaciones de las 5 películas más similares
+    sim_scores = sim_scores[1:6]
+
+    # Obtener los índices de las películas más similares
+    movie_indices = [i[0] for i in sim_scores]
+
+    # Retornar los títulos de las películas más similares
+    return df_movies1['title'].iloc[movie_indices].tolist()
+
+# Definir la ruta de recomendación en FastAPI
+@app.get("/recomendacion/")
+def get_recomendacion(titulo: str):
+    return {"recomendaciones": recomendacion(titulo)}
+
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
