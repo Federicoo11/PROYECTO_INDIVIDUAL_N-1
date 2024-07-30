@@ -2,3 +2,5 @@ fastapi
 pandas
 uvicorn
 scikit-learn
+pyarrow
+fastparquet
