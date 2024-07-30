@@ -183,7 +183,7 @@ def get_director_endpoint(nombre_director: str):
 # Usar TF-IDF Vectorizer en los títulos de las películas
 tfidf = TfidfVectorizer(stop_words='english')
 df_movies1['title'] = df_movies1['title'].fillna('')
-tfidf_matrix = tfidf.fit_transform(df_movies1['title'])
+tfidf_matrix = tfidf.fit_transform(df_movies4['title'])
 
 # Calcular la similitud del coseno
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
