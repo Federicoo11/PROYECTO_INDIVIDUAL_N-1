@@ -7,9 +7,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 app = FastAPI()
 
 # Cargar los csv
-df_movies1 = pd.read_csv("csv/movies1.csv")
-df_movies2 = pd.read_csv("csv/movies2.csv")
-df_movies3 = pd.read_csv("csv/movies3.csv")
+df_movies1 = pd.read_csv("csv/movies1.parquet")
+df_movies2 = pd.read_csv("csv/movies2.parquet")
+df_movies3 = pd.read_csv("csv/movies3.parquet")
 
 def cantidad_filmaciones_mes(mes, df_movies1):
     meses_espanol_ingles = {
