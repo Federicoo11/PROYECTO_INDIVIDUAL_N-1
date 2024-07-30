@@ -10,6 +10,7 @@ app = FastAPI()
 df_movies1 = pd.read_parquet("csv/movies1.parquet")
 df_movies2 = pd.read_parquet("csv/movies2.parquet")
 df_movies3 = pd.read_parquet("csv/movies3.parquet")
+df_movies3 = pd.read_parquet("csv/movies4.parquet")
 
 def cantidad_filmaciones_mes(mes, df_movies1):
     meses_espanol_ingles = {
@@ -188,7 +189,7 @@ tfidf_matrix = tfidf.fit_transform(df_movies1['title'])
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
 # Crear un índice para los títulos de las películas
-indices = pd.Series(df_movies1.index, index=df_movies1['title']).drop_duplicates()
+indices = pd.Series(df_movies4.index, index=df_movies1['title']).drop_duplicates()
 
 def recomendacion(titulo):
     # Verificar si el título existe en los datos
