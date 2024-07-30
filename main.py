@@ -182,14 +182,14 @@ def get_director_endpoint(nombre_director: str):
 
 # Usar TF-IDF Vectorizer en los títulos de las películas
 tfidf = TfidfVectorizer(stop_words='english')
-df_movies1['title'] = df_movies1['title'].fillna('')
+df_movies4['title'] = df_movies4['title'].fillna('')
 tfidf_matrix = tfidf.fit_transform(df_movies4['title'])
 
 # Calcular la similitud del coseno
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
 # Crear un índice para los títulos de las películas
-indices = pd.Series(df_movies4.index, index=df_movies1['title']).drop_duplicates()
+indices = pd.Series(df_movies4.index, index=df_movies4['title']).drop_duplicates()
 
 def recomendacion(titulo):
     # Verificar si el título existe en los datos
