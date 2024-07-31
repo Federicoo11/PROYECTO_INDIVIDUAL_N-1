@@ -71,8 +71,8 @@ def get_cantidad_filmaciones_dia(dia: str):
     result = cantidad_filmaciones_dia(dia, df_movies1)
     return {"mensaje": result}
 
-def score_titulo(titulo_de_la_filmacion, df):
-    filmacion = df[df['title'].str.lower() == titulo_de_la_filmacion.lower()]
+def score_titulo(titulo_de_la_filmacion, df_movies1):
+    filmacion = df_movies1[df_movies1['title'].str.lower() == titulo_de_la_filmacion.lower()]
 
     if filmacion.empty:
         return f"No se encontró una filmación con el título '{titulo_de_la_filmacion}'."
