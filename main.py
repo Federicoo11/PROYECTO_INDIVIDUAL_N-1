@@ -210,7 +210,7 @@ def recomendacion(titulo):
     movie_indices = [i[0] for i in sim_scores]
 
     # Retornar los títulos de las películas más similares
-    return df_movies1['title'].iloc[movie_indices].tolist()
+    return df_movies4['title'].iloc[movie_indices].tolist()
 
 # Definir la ruta de recomendación en FastAPI
 @app.get("/recomendacion/")
