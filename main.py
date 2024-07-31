@@ -1,9 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 import pandas as pd
 import calendar
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
 
 app = FastAPI()
 
@@ -45,7 +44,6 @@ def get_cantidad_filmaciones_mes(mes: str):
     result = cantidad_filmaciones_mes(mes, df_movies1)
     return {"mensaje": result}
 
-
 def cantidad_filmaciones_dia(dia, df_movies1):
     dias_espanol_num = {
         "lunes": 0,
@@ -73,7 +71,6 @@ def get_cantidad_filmaciones_dia(dia: str):
     result = cantidad_filmaciones_dia(dia, df_movies1)
     return {"mensaje": result}
 
-
 def score_titulo(titulo_de_la_filmacion, df):
     filmacion = df[df['title'].str.lower() == titulo_de_la_filmacion.lower()]
 
@@ -90,7 +87,6 @@ def score_titulo(titulo_de_la_filmacion, df):
 def get_score_titulo(titulo: str):
     result = score_titulo(titulo, df_movies1)
     return {"mensaje": result}
-
 
 def votos_titulo(titulo_de_la_filmacion, df_movies1):
     filmacion = df_movies1[df_movies1['title'].str.lower() == titulo_de_la_filmacion.lower()]
@@ -112,7 +108,6 @@ def votos_titulo(titulo_de_la_filmacion, df_movies1):
 def get_votos_titulo(titulo: str):
     result = votos_titulo(titulo, df_movies1)
     return {"mensaje": result}
-
 
 def get_actor(nombre_actor, df_movies2):
     peliculas_actor = df_movies2[df_movies2['name'] == nombre_actor]
@@ -137,7 +132,6 @@ def get_actor(nombre_actor, df_movies2):
 def get_actor_endpoint(nombre_actor: str):
     result = get_actor(nombre_actor, df_movies2)
     return {"mensaje": result}
-
 
 def get_director(nombre_director, df_movies3):
     peliculas_director = df_movies3[df_movies3['director'] == nombre_director].copy()
@@ -177,6 +171,9 @@ def get_director(nombre_director, df_movies3):
     return mensaje_final
 
 @app.post("/get_director/")
+def get_director_endpoint(nombre_director: str):
+    result = get_director(nombre_director, df_movies3)
+    return {"mensaje": result}
 
 # Usar TF-IDF Vectorizer en los títulos de las películas
 tfidf = TfidfVectorizer(stop_words='english')
@@ -217,8 +214,6 @@ def recomendacion(titulo):
 def get_recomendacion(titulo: str):
     return {"recomendaciones": recomendacion(titulo)}
 
-
-
-if _name_ == "_main_":
+if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
