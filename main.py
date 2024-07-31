@@ -4,6 +4,7 @@ import calendar
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+
 app = FastAPI()
 
 # Cargar los csv
@@ -176,9 +177,6 @@ def get_director(nombre_director, df_movies3):
     return mensaje_final
 
 @app.post("/get_director/")
-def get_director_endpoint(nombre_director: str):
-    result = get_director(nombre_director, df_movies3)
-    return {"mensaje": result}
 
 # Usar TF-IDF Vectorizer en los títulos de las películas
 tfidf = TfidfVectorizer(stop_words='english')
